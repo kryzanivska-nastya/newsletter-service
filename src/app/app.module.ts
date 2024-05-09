@@ -3,7 +3,7 @@ import {
   BrowserModule,
   provideClientHydration,
 } from '@angular/platform-browser';
-
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -31,6 +31,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     MatSelectModule,
     MatCheckboxModule,
     MatGridListModule,
+    FormsModule,
   ],
   providers: [provideClientHydration(), provideAnimationsAsync()],
   bootstrap: [AppComponent],

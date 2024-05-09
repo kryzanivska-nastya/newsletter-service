@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Post } from '../post.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-post-details',
@@ -6,20 +8,21 @@ import { Component } from '@angular/core';
   styleUrl: './post-details.component.css',
 })
 export class PostDetailsComponent {
-  posts = [
-    {
-      id: '1',
-      title: 'Post 1',
-      summary: 'Summary of Post 1',
-      content: 'Content of Post 1',
-    },
-    {
-      id: '2',
-      title: 'Post 2',
-      summary: 'Summary of Post 2',
-      content: 'Content of Post 2',
-    },
-  ];
+  post!: Post;
 
-  constructor() {}
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      const postId = params['id'];
+
+      this.post = {
+        id: postId,
+        title: 'Post Title',
+        summary: 'Post Summary',
+        content: 'Post Content',
+        tags: ['tag1', 'tag2'],
+      };
+    });
+  }
 }

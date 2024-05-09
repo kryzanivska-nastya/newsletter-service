@@ -1,5 +1,19 @@
+<div class="filter-container">
+  <mat-form-field>
+    <mat-label>Filter by Tag</mat-label>
+    <mat-select
+      [(ngModel)]="selectedTag"
+      (selectionChange)="onTagChange($event.value)"
+    >
+      <mat-option *ngFor="let tag of tags" [value]="tag">
+        {{ tag }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
 <mat-card
-  *ngFor="let post of posts"
+  *ngFor="let post of filteredPosts"
   class="post-card"
   [routerLink]="['/post', post.id]"
 >
