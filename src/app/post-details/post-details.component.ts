@@ -1,28 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Post } from '../post.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
+import { PostService } from '../post.service';
 
 @Component({
   selector: 'app-post-details',
   templateUrl: './post-details.component.html',
   styleUrl: './post-details.component.css',
 })
-export class PostDetailsComponent {
+export class PostDetailsComponent implements OnInit {
   post!: Post;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private postService: PostService
+  ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
+    this.route.params.subscribe((params: Params) => {
       const postId = params['id'];
-
-      this.post = {
-        id: postId,
-        title: 'Post Title',
-        summary: 'Post Summary',
-        content: 'Post Content',
-        tags: ['tag1', 'tag2'],
-      };
+      if (postId) {
+        this.getPost(postId);
+      }
     });
+  }
+
+  getPost(id: string): void {
+    this.postService.getPostById(id).subscribe(
+      (post) => {
+        this.post = post;
+      },
+      (error) => {
+        console.error('Error:', error.message);
+      }
+    );
   }
 }

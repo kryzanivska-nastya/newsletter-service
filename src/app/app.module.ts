@@ -4,6 +4,8 @@ import {
   provideClientHydration,
 } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -32,6 +34,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     MatCheckboxModule,
     MatGridListModule,
     FormsModule,
+    HttpClientModule,
+    RouterModule,
   ],
   providers: [provideClientHydration(), provideAnimationsAsync()],
   bootstrap: [AppComponent],

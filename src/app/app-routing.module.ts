@@ -7,9 +7,8 @@ const routes: Routes = [
   { path: '', component: PostListComponent },
   { path: 'post/:id', component: PostDetailsComponent },
 ];
-
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes), RouterModule],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

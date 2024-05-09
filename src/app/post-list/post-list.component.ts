@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Post } from '../post.model';
+import { PostService } from '../post.service';
 
 @Component({
   selector: 'app-post-list',
@@ -7,30 +8,23 @@ import { Post } from '../post.model';
   styleUrl: './post-list.component.css',
 })
 export class PostListComponent {
-  posts: Post[] = [
-    {
-      id: '1',
-      title: 'Post 1',
-      summary: 'Summary of Post 1',
-      tags: ['tag1', 'tag2'],
-      content: 'Content of Post 1',
-    },
-    {
-      id: '2',
-      title: 'Post 2',
-      summary: 'Summary of Post 2',
-      tags: ['tag2', 'tag3'],
-      content: 'Content of Post 2',
-    },
-  ];
+  posts: Post[] = [];
+
+  constructor(private postService: PostService) {}
+
+  getPosts(): void {
+    this.postService.getPosts().subscribe((posts) => {
+      this.posts = posts;
+      console.log('Retrieved Posts:', this.posts);
+    });
+  }
 
   tags: string[] = [];
   selectedTag!: string;
   filteredPosts: Post[] = [];
 
-  constructor() {}
-
   ngOnInit(): void {
+    this.getPosts();
     this.tags = ['All'];
     this.posts.forEach((post) => {
       post.tags?.forEach((tag) => {

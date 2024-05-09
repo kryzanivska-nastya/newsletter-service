@@ -1,11 +1,33 @@
-:host {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+.post-details {
+    margin: 20px;
   }
   
-  mat-card {
-    max-width: 600px;
+  .tags {
+    margin-top: 10px;
+    font-style: italic;
+  }
+  
+  .tags span {
+    margin-right: 5px;
+  }
+  
+  .content img {
+    max-width: 100%;
+  }
+  .post-card {
     width: 100%;
+    box-sizing: border-box;
+    margin: 20px;
+  }
+  
+  @media only screen and (min-width: 600px) {
+    .post-card {
+      max-width: 600px;
+      margin: 20px auto;
+    }
+  }
+  .chip {
+    display: inline-block;
+    margin-right: 8px;
+    margin-bottom: 8px;
   }
