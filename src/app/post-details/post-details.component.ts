@@ -14,6 +14,7 @@ export class PostDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private postService: PostService
   ) {}
 
@@ -30,7 +31,9 @@ export class PostDetailsComponent implements OnInit {
     this.postService.getPostById(id).subscribe(
       (post) => {
         this.post = post;
-        this.renderMarkdown(post.content);
+        if (this.post) {
+          this.renderMarkdown(post.content);
+        }
       },
       (error) => {
         console.error('Error:', error.message);
@@ -48,5 +51,9 @@ export class PostDetailsComponent implements OnInit {
         console.error('Error rendering Markdown:', error);
       }
     );
+  }
+
+  goBack(): void {
+    this.router.navigate(['/posts']);
   }
 }

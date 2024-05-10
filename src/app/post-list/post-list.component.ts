@@ -9,22 +9,25 @@ import { PostService } from '../post.service';
 })
 export class PostListComponent {
   posts: Post[] = [];
+  tags: string[] = [];
+  selectedTag: string = 'All';
+  filteredPosts: Post[] = [];
 
   constructor(private postService: PostService) {}
+
+  ngOnInit(): void {
+    this.getPosts();
+  }
 
   getPosts(): void {
     this.postService.getPosts().subscribe((posts) => {
       this.posts = posts;
-      console.log('Retrieved Posts:', this.posts);
+      this.extractTags();
+      this.filterPosts();
     });
   }
 
-  tags: string[] = [];
-  selectedTag!: string;
-  filteredPosts: Post[] = [];
-
-  ngOnInit(): void {
-    this.getPosts();
+  extractTags(): void {
     this.tags = ['All'];
     this.posts.forEach((post) => {
       post.tags?.forEach((tag) => {
@@ -33,16 +36,18 @@ export class PostListComponent {
         }
       });
     });
-    this.selectedTag = 'All';
-    this.filteredPosts = this.posts;
   }
 
-  onTagChange(tag: string): void {
-    if (tag === 'All') {
+  onTagChange(): void {
+    this.filterPosts();
+  }
+
+  filterPosts(): void {
+    if (this.selectedTag === 'All') {
       this.filteredPosts = this.posts;
     } else {
       this.filteredPosts = this.posts.filter((post) =>
-        post.tags?.includes(tag)
+        post.tags?.includes(this.selectedTag)
       );
     }
   }
