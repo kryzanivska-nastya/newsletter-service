@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { Post } from './post.model';
 
@@ -11,12 +15,26 @@ export class PostService {
 
   constructor(private http: HttpClient) {}
 
+  renderMarkdown(content: string): Observable<any> {
+    const url = `${this.apiUrl}/renderMarkdown`; // Updated URL
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.post<any>(url, { content }, { headers }).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error('Error rendering Markdown:', error);
+        return throwError('Something went wrong; please try again later.');
+      })
+    );
+  }
   getPosts(): Observable<Post[]> {
     return this.http
       .get<Post[]>(this.apiUrl)
       .pipe(catchError(this.handleError));
   }
 
+  renderPost(id: string): Observable<any> {
+    const url = `${this.apiUrl}/posts/render/${id}`;
+    return this.http.get<any>(url);
+  }
   getPostById(id: string): Observable<Post> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.get<Post>(url).pipe(catchError(this.handleError));

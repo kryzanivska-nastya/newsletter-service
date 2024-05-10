@@ -19,10 +19,12 @@ import { AppComponent } from './app.component';
 import { PostListComponent } from './post-list/post-list.component';
 import { PostDetailsComponent } from './post-details/post-details.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MarkdownModule } from 'ngx-markdown';
 
 @NgModule({
   declarations: [AppComponent, PostListComponent, PostDetailsComponent],
   imports: [
+    MarkdownModule.forRoot(),
     BrowserModule,
     AppRoutingModule,
     MatButtonModule,

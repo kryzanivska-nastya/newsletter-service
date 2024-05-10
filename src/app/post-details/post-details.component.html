@@ -2,5 +2,5 @@
   <h2>{{ post.title }}</h2>
   <p>{{ post.summary }}</p>
   <p *ngFor="let tag of post.tags" class="chip">{{ tag }}</p>
-  <div [innerHTML]="post.content"></div>
+  <div [innerHTML]="renderedContent"></div>
 </mat-card>
