@@ -1,27 +1,76 @@
-# NewsletterService
+# Newsletter Service
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.9.
+This project is a newsletter service that displays a list of posts in tile format on the main page, with functionality to navigate to detailed post pages. The service includes filtering capabilities based on post tags. The backend is simulated with dummy data, and the post content is rendered from Markdown text including images.
 
-## Development server
+## Technologies Used
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- **Frontend**: Angular, TypeScript, Angular Material
+- **Backend**: Python FastAPI, REST WebAPI
+- **Deployment**: Docker, Docker Compose
+- **Documentation**: Markdown
 
-## Code scaffolding
+## Installation and Setup
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Prerequisites
 
-## Build
+- Docker installed on your machine.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Clone the Repository
 
-## Running unit tests
+```bash
+git clone <repository_url>
+cd newsletter-service
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Build and Run Docker Containers
+```bash
+docker-compose up --build
+```
+This command will build and start the Docker containers for the frontend and backend.
 
-## Running end-to-end tests
+## Accessing the Frontend
+Once the containers are up and running, you can access the frontend at http://localhost:4200.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+# Interacting with the API
+## Get All Posts
 
-## Further help
+```http
+GET http://localhost:8000/posts
+```
+## Get Post by ID
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```http
+GET http://localhost:8000/posts/{post_id}
+```
+## Filter Posts by Tag
+
+```http
+GET http://localhost:8000/posts/filter?tag={tag}
+```
+
+# Other Endpoints
+
+## Render Markdown Content
+
+```http
+POST http://localhost:8000/posts/renderMarkdown
+```
+
+## Get Tags
+
+```http
+GET http://localhost:8000/tags
+```
+# Usage
+## Main Page
+The main page displays posts in a tile format with a brief summary.
+Each tile is clickable, leading to a detailed view of the post.
+You can filter posts by tags using the dropdown menu.
+## Detailed Post View
+The detailed view of the posts renders Markdown text, including handling of embedded images.
+Clicking on the "Back to Posts" button will navigate you back to the main page.
+## Additional Notes
+Ensure the Docker containers are running to access the application.
+You may need to wait a few moments for the containers to start up initially.
+## Contributing
+If you'd like to contribute to this project, please fork the repository and create a pull request.
