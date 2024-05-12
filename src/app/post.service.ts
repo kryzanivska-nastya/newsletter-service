@@ -43,7 +43,7 @@ export class PostService {
   }
 
   getTags(): Observable<string[]> {
-    return this.http.get<string[]>('/api/tags'); // Using relative URL directly
+    return this.http.get<string[]>('/api/tags');
   }
 
   filterPosts(tag: string): Observable<Post[]> {
