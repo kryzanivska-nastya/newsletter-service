@@ -1,76 +1,121 @@
 # Newsletter Service
 
-This project is a newsletter service that displays a list of posts in tile format on the main page, with functionality to navigate to detailed post pages. The service includes filtering capabilities based on post tags. The backend is simulated with dummy data, and the post content is rendered from Markdown text including images.
+## Project Overview
 
-## Technologies Used
+The objective of this project is to develop a newsletter service that displays a list of posts in tile format on the main page, with functionality to navigate to detailed post pages. The service includes filtering capabilities based on post tags. The backend is simulated with dummy data, and the post content is rendered from Markdown text including images.
 
-- **Frontend**: Angular, TypeScript, Angular Material
-- **Backend**: Python FastAPI, REST WebAPI
-- **Deployment**: Docker, Docker Compose
-- **Documentation**: Markdown
+### Technologies Used
 
-## Installation and Setup
+- **Frontend:**
+  - Angular
+  - TypeScript
+  - Angular Material
 
-### Prerequisites
+- **Backend:**
+  - Python FastAPI
+  - REST WebAPI
 
-- Docker installed on your machine.
+- **Deployment:**
+  - Docker
+  - Docker Compose
 
-### Clone the Repository
+- **Documentation:**
+  - Markdown
+
+## Project Structure
+
+The project structure is as follows:
+
+- **frontend:** Contains the Angular frontend code.
+- **backend:** Contains the Python FastAPI backend code.
+
+## Setup
+
+### Frontend
+
+1. Navigate to the `frontend` directory.
+2. Run `npm install` to install dependencies.
+3. Run `npm start` to start the frontend server.
 
 ```bash
-git clone <repository_url>
-cd newsletter-service
+cd frontend
+npm install
+npm start
 ```
 
-## Build and Run Docker Containers
+### Backend
+1. Navigate to the backend directory.
+2. Install Python dependencies using pip install -r requirements.txt.
+3. Run the backend server using uvicorn main:app --host 0.0.0.0 --port 8000.
+
 ```bash
-docker-compose up --build
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --host 0.0.0.0 --port 8000
 ```
-This command will build and start the Docker containers for the frontend and backend.
+### Dockerfiles
+### Frontend Dockerfile
+```Dockerfile
+FROM node:alpine
 
-## Accessing the Frontend
-Once the containers are up and running, you can access the frontend at http://localhost:4200.
+WORKDIR /usr/src/app
 
-# Interacting with the API
-## Get All Posts
+COPY . /usr/src/app
 
-```http
-GET http://localhost:8000/posts
-```
-## Get Post by ID
+RUN npm install -g @angular/cli
 
-```http
-GET http://localhost:8000/posts/{post_id}
-```
-## Filter Posts by Tag
+RUN npm install
 
-```http
-GET http://localhost:8000/posts/filter?tag={tag}
+CMD ["ng", "serve", "--host", "0.0.0.0"]
 ```
 
-# Other Endpoints
+### Backend Dockerfile
+```Dockerfile
+FROM python:3.9-slim AS base
 
-## Render Markdown Content
+WORKDIR /app
 
-```http
-POST http://localhost:8000/posts/renderMarkdown
+COPY . .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 ```
 
-## Get Tags
+### Docker Compose
+docker-compose.yaml
+```yaml
+version: '3.8'
 
-```http
-GET http://localhost:8000/tags
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./newsletter-service-backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
 ```
-# Usage
-## Main Page
-The main page displays posts in a tile format with a brief summary.
-Each tile is clickable, leading to a detailed view of the post.
-You can filter posts by tags using the dropdown menu.
-## Detailed Post View
-The detailed view of the posts renders Markdown text, including handling of embedded images.
-Clicking on the "Back to Posts" button will navigate you back to the main page.
-## Additional Notes
-Ensure the Docker containers are running to access the application.
-You may need to wait a few moments for the containers to start up initially.
-## Contributing
-If you'd like to contribute to this project, please fork the repository and create a pull request.
+
+### Deployment
+## Docker
+Make sure Docker is installed on your machine.
+Run docker-compose up in the project root directory to build and start the frontend and backend services.
+
+```bash
+docker-compose up
+```
+
+## Usage
+### Access the frontend application at http://localhost:8080/.
+### Access the backend API at http://localhost:8000/.
+
+
