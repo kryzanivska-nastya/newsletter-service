@@ -38,8 +38,15 @@ export class PostListComponent {
     });
   }
 
-  onTagChange(): void {
-    this.filterPosts();
+  onTagChange(event: any): void {
+    this.selectedTag = event.value;
+    if (this.selectedTag === 'All') {
+      this.filteredPosts = this.posts;
+    } else {
+      this.filteredPosts = this.posts.filter((post) =>
+        post.tags?.includes(this.selectedTag)
+      );
+    }
   }
 
   filterPosts(): void {

@@ -8,7 +8,7 @@
  
   .post-card {
     flex: 0 1 calc(33.33% - 20px);
-    margin-bottom: 20px;
+    margin: 15px;
   }
   
   @media screen and (max-width: 767px) {

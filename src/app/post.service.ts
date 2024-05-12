@@ -11,12 +11,12 @@ import { Post } from './post.model';
   providedIn: 'root',
 })
 export class PostService {
-  private apiUrl = 'http://localhost:8000/posts';
+  private apiUrl = '/api/posts';
 
   constructor(private http: HttpClient) {}
 
   renderMarkdown(content: string): Observable<any> {
-    const url = `${this.apiUrl}/renderMarkdown`; // Updated URL
+    const url = `${this.apiUrl}/renderMarkdown`;
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http.post<any>(url, { content }, { headers }).pipe(
       catchError((error: HttpErrorResponse) => {
@@ -25,6 +25,7 @@ export class PostService {
       })
     );
   }
+
   getPosts(): Observable<Post[]> {
     return this.http
       .get<Post[]>(this.apiUrl)
@@ -32,16 +33,17 @@ export class PostService {
   }
 
   renderPost(id: string): Observable<any> {
-    const url = `${this.apiUrl}/posts/render/${id}`;
+    const url = `${this.apiUrl}/render/${id}`;
     return this.http.get<any>(url);
   }
+
   getPostById(id: string): Observable<Post> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.get<Post>(url).pipe(catchError(this.handleError));
   }
 
   getTags(): Observable<string[]> {
-    return this.http.get<string[]>('http://localhost:8000/tags');
+    return this.http.get<string[]>('/api/tags'); // Using relative URL directly
   }
 
   filterPosts(tag: string): Observable<Post[]> {
